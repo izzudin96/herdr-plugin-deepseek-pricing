@@ -1,0 +1,16 @@
+{
+  "model": "deepseek-flash",
+  "modelVersion": "DeepSeek-V4.1-Flash-1017",
+  "currency": "USD",
+  "unit": "per 1M tokens",
+  "peak": {
+    "inputCacheHit": "0.006",
+    "inputCacheMiss": "0.3",
+    "output": "1.2"
+  },
+  "offPeak": {
+    "inputCacheHit": "0.003",
+    "inputCacheMiss": "0.15",
+    "output": "0.6"
+  }
+}

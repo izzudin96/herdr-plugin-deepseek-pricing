@@ -1,0 +1,10 @@
+{
+  "name": "herdr-plugin-deepseek-pricing",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Herdr plugin showing DeepSeek Flash peak and off-peak pricing",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  }
+}

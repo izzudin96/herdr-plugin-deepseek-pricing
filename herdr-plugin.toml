@@ -1,0 +1,18 @@
+id = "deepseek.pricing"
+name = "DeepSeek Pricing"
+version = "0.1.0"
+min_herdr_version = "0.9.5"
+description = "Show DeepSeek Flash peak and off-peak pricing"
+platforms = ["linux", "macos", "windows"]
+
+[[actions]]
+id = "show"
+title = "DeepSeek pricing"
+contexts = ["workspace"]
+command = ["node", "bin/open.js"]
+
+[[panes]]
+id = "watch"
+title = "DeepSeek pricing"
+placement = "overlay"
+command = ["node", "bin/watch.js"]
