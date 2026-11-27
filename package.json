@@ -6,5 +6,20 @@
   "description": "Herdr plugin showing DeepSeek Flash peak and off-peak pricing",
   "scripts": {
     "test": "node --test test/*.test.js"
+  },
+  "exports": {
+    "./tui": "./tui/pricing.jsx"
+  },
+  "peerDependencies": {
+    "@opencode/plugin": "*",
+    "@opentui/core": ">=0.6.6",
+    "@opentui/solid": ">=0.6.6",
+    "solid-js": ">=1.9.0"
+  },
+  "peerDependenciesMeta": {
+    "@opencode/plugin": { "optional": true },
+    "@opentui/core": { "optional": true },
+    "@opentui/solid": { "optional": true },
+    "solid-js": { "optional": true }
   }
 }
