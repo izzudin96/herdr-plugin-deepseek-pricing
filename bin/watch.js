@@ -7,6 +7,8 @@ import { loadPricing } from "../lib/config.js";
 import { createHolidayCalendar } from "../lib/calendar.js";
 import { buildReport } from "../lib/report.js";
 import { formatStatus } from "../lib/format.js";
+import { createAccountCache } from "../lib/account.js";
+import { formatAccount } from "../lib/account-format.js";
 
 const out = process.stdout;
 const isTTY = Boolean(out.isTTY);
@@ -113,6 +115,8 @@ try {
   const pricing = loadPricing(options.pricing ?? undefined);
   const calendar = createHolidayCalendar({ dir: options.holidays ?? undefined });
   const intervalMs = options.intervalMs ?? 1_000;
+  const account = createAccountCache({ ttlMs: 60_000 });
+  let accountSnapshot = null;
 
   function render() {
     const report = buildReport({
@@ -120,11 +124,16 @@ try {
       pricing,
       calendar,
     });
-    const text = formatStatus(report, {
-      color: options.color && isTTY && !process.env.NO_COLOR,
-      width: out.columns || 80,
-      footer: "q or Esc to close",
-    });
+    const color = options.color && isTTY && !process.env.NO_COLOR;
+    const text = [
+      formatStatus(report, {
+        color,
+        width: out.columns || 80,
+        footer: "q or Esc to close",
+      }),
+      "",
+      formatAccount(accountSnapshot, { color }),
+    ].join("\n");
 
     if (isTTY) out.write("\x1b[2J\x1b[H");
     out.write(`${text}\n`);
@@ -162,6 +171,11 @@ try {
     process.exit(0);
   });
   process.on("exit", cleanup);
+
+  account.get().then((snapshot) => {
+    accountSnapshot = snapshot;
+    tick();
+  });
 
   tick();
   timer = setInterval(tick, intervalMs);
